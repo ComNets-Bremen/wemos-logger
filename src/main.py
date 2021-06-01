@@ -11,8 +11,7 @@ Important things:
 - The number is increased after each restart of if the max file size is exceeded (default 1M)
 - Press the button for 15..20 secs -> format sd card
 - Press the button for 5..10 secs -> start AP with webserver on IP 192.168.4.1
-- Press the button for less than 5 secs -> return to normal operation. (currently not working)
-- The webserver is blocking, i.e. a restart is required to continue normal operation!
+- Press the button for less than 5 secs -> return to normal operation. 
 - Webserver SSID MicroPython-<id>, default password: UHB2021Summer
 - URLs: http://192.168.4.1/ -> List all sensor data on sd card as json array with the data path
     http://192.168.4.1/DATA_1 -> Get sensor readings from this file as a json file
@@ -43,7 +42,7 @@ SD_CS = 15 #D8
 
 DATA_FILENAME = "DATA_"
 DATA_MAX_FILE_SIZE = 1*1000*1000 # 1M
-INTERVAL = 60 # secs
+INTERVAL = 600 # secs
 AP_PASSWORD = "UHB2021Summer"
 
 SENSOR_RETRY = 3
