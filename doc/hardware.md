@@ -20,7 +20,7 @@ We are using four modules which can be stacked together (left to right):
 
 The nodes are soldered completely. Only the pins have to be soldered as the type of pins depend on the application scenario. Three types of pins are available:
 
-![ ](/home/jd/src/comnets-github/wemos-logger/doc/img/pins.jpg  "Three types of pins")
+![ ](img/pins.jpg  "Three types of pins")
 
 1. The pins on the very left side of the picture are connected through the PCB, i.e. the PCBs can be stacked. Here, different types and qualities are available.
 
