@@ -1,32 +1,11 @@
-Manual: http://docs.micropython.org/en/latest/esp8266/tutorial/intro.html#deploying-the-firmware
+# How to get the system running
 
-Download Firmware: https://micropython.org/download/esp8266/
--> https://micropython.org/resources/firmware/esp8266-20210418-v1.15.bin
-
-esptool
-
-python3 -m venv .
-
-. ./bin/activate
-(abc...) vor prompt
-pip3 install esptool
-
-
-esptool.py --port /dev/ttyUSB0 erase_flash
-esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 esp8266-20210418-v1.15.bin
-
-Done installing upython
-
-
-
-VSCODE
-Pymakr
-open project
-pymakr conf -> change port
-ctrl-shift-p -> connect
-REPL
-UPLOAD
-
-
-SD: No SD card -> format in computer (one partition, fat32) , try again
+- The connection and wiring of the hardware is described in
+  [hardware.md](hardware.md).
+- Uploading the firmware, i.e., micropython to the node is described in
+  [firmware.md](firmware.md).
+- Installing visual studio code and uploading the logger app to the nodes is
+  shown in [software.md](software.md).
+- Some common errors and problems including the solutions are discussed in
+  [faq.md](faq.md)
 
