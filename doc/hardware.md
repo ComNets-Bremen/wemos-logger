@@ -77,7 +77,7 @@ The sensor shield is also soldered similar to the SD and the D1 shield and shoul
 
 ![Sensor shield](img/dht_soldering_1.jpg "Sensor shield")
 
-## Checking and stacking the nodes together
+## 5: Checking and stacking the nodes together
 
 Now you should have the following four shields with pins connected:
 
@@ -95,7 +95,7 @@ The stack should look as follows:
 ![Stack sideview](img/stack_complete_side.jpg "Stack sideview")
 ![Stack topview](img/stack_complete_top.jpg "Stack topview")
 
-Congratulation. You are done.
+Congratulation. You are done. If you already have one: Please insert the SD card.
 
 # CS Pin for SD card
 
