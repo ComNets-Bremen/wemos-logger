@@ -1,6 +1,6 @@
-# wemos-logger - A basic logger app for esp32 wemos devices
+# wemos-logger - A basic logger app for esp8266 wemos devices
 
-The documentation - especially how to build this logger -  is located in the [doc](doc) directory, the source code for the logger in the [src](src) directory.
+The documentation - especially how to build this logger -  is located in the [doc](doc) directory, the source code for the logger in the [src](src) directory. In this file, you will find an overview of the system and the capabilities.
 
 # What is this?
 
