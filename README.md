@@ -31,13 +31,33 @@ Additionally, the logger has a button for fundamental user interaction:
 
 Pressing the button for 5-10 seconds will enable the access point and start the web server:
 
-* **SSID**: `micropython-<UNIQUE_ID>`
+* **SSID**: `MicroPython-<UNIQUE_ID>`
 * **Password**: `UHB2021Summer`
 * **Server IP**: `192.168.4.1`
 
 The server will return json documents with the requested data:
 * The root document will return a json document listing all available data.
-* The data is stored as numbered data URLs using the following format `192.168.4.1:/DATA_1`. This json document will contain the sensor readings.
+* The data is stored as numbered data URLs using the following format `http://192.168.4.1/DATA_1`. This json document will contain the sensor readings.
+* If a non-existent json document is requested, the root index document will be returned.
+
+The following screenshot shows an example of the listing of the available data:
+
+![The index of all available data](doc/img/screenshot_index.png  "The index of all available data")
+
+An excerpt of one data file looks as follows:
+
+![An excerpt of data file](doc/img/screenshot_datasets.png  "An excerpt of data file")
+
+It contains the following data:
+
+* **id**: The id of the node.
+* **data**: The measurements from this node. This version contains the following values:
+    * **time**: The local timestamp in seconds when the measurement was taken.
+    * **humidity**: The measured humidity in percent
+    * **temperature**: The measured temperature in degree celcius
+    * **retry**: If an error occurred while reading the sensor, this counter is increased. Should be zero in case of no errors.
+
+
 
 ## General remarks
 
@@ -52,4 +72,4 @@ Nothing known... until now.
 
 Jens Dede, Sustainable Communication Networks, University of Bremen, jd@comnets.uni-bremen.de, 2021
 
-This code is licensed under the GPLv3
+This code is licensed under the [GPLv3
