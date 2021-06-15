@@ -28,6 +28,14 @@ After installing Visual Studio Code and the pymakr plugin including the dependen
     - Microchip Technology, Inc.
 - Save and exit the file
 
+### Make sure autoconnect is disabled in global config
+
+- Press CTRL-ALT-P to open the search dialog
+- Enter the word *global*. You will find an entry with the title *Pymakr > Global settings*
+- Select this one and press enter.
+- A json config file is opened. Change the value for "auto_connect" to False.
+- Save and exit the file
+
 ### Change the serial port
 
 - Press CTRL-ALT-P to open the search dialog
