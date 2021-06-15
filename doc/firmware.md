@@ -17,3 +17,6 @@ The basic steps are as follows and executed on the command line:
 * Upload the firmware you have downloaded from micropython.org: `esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 esp8266-20210418-v1.15.bin`
 
 After these steps, the firmware is successfully installed. This usually only has to be done once per device.
+
+Please be aware that the commands are slightly different for Windows systems:
+`.\venv\Scripts\activate`
