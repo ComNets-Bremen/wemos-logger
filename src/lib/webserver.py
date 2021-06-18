@@ -16,9 +16,13 @@ import ujson as json
 class SimpleWebserver(object):
     addr = None
     s = None
+    datadir = None
+
+    def __init__(self, datadir):
+        self.datadir = datadir
 
     def serve_index(self, conn):
-        files = os.listdir('/sd')
+        files = os.listdir(self.datadir)
         response = dict()
         response["data"] = list()
         for f in files:
@@ -28,11 +32,11 @@ class SimpleWebserver(object):
         conn.send(json.dumps(response))
 
     def serve_file(self, conn, file):
-        files = os.listdir('/sd')
+        files = os.listdir(self.datadir)
         if file in files:
             conn.sendall('HTTP/1.0 200 OK\r\nContent-type: application/json\r\n\r\n')
             conn.sendall('[')
-            with open('/sd/'+file, "r") as infile:
+            with open(self.datadir + '/'+file, "r") as infile:
                 isfirst = True
                 for line in infile:
                     if not isfirst:
@@ -88,7 +92,7 @@ class SimpleWebserver(object):
                     if not line or line == b'\r\n':
                         break
 
-                if url[1:] in os.listdir('/sd'):
+                if url[1:] in os.listdir(self.datadir):
                     self.serve_file(cl, url[1:])
                 else:
                     self.serve_index(cl)
