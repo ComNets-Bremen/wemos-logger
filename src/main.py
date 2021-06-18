@@ -41,8 +41,8 @@ SD_CS = 15 #D8
 # SPI on GPIO 12, 13, 14 / D6, D7, D5
 
 DATA_FILENAME = "DATA_"
-DATA_MAX_FILE_SIZE = 1*1000*1000 # 1M
-INTERVAL = 600 # secs
+DATA_MAX_FILE_SIZE = 4096 #4k
+INTERVAL = 60 # secs
 AP_PASSWORD = "UHB2021Summer"
 
 SENSOR_RETRY = 3
@@ -58,6 +58,8 @@ STATE_NORMAL = 3
 state = STATE_NORMAL # default state
 
 last_button_state_change = None
+
+datadir = "/sd"
 
 # Store data to the given filename, return if a new file should be created (> 1M)
 def store_data(filename, data):
@@ -93,7 +95,7 @@ def read_sensors():
         return None
 
 # Read the stored data from the sd card and remove the files if requested
-def read_stored_data(path="/sd/", remove = False):
+def read_stored_data(path=datadir, remove = False):
     for f in os.listdir(path):
         if f.startswith(DATA_FILENAME):
             print("FILE ", f)
@@ -125,6 +127,7 @@ def button_handler(pin):
 def do_measure():
     global new_fileid
     global filename
+    global datadir
     data = {}
     data["id"] = esp.flash_id()
     data["data"] = read_sensors()
@@ -133,16 +136,23 @@ def do_measure():
     if not store_data(filename, data):
         # Exceeded file limit, create new file
         new_fileid = new_fileid + 1
-        filename = "/sd/" + DATA_FILENAME + str(new_fileid)
+        filename = datadir + "/" + DATA_FILENAME + str(new_fileid)
         create_empty_file(filename)
 
+    # check free space:
+    free_space = os.statvfs(datadir)[3] / os.statvfs(datadir)[2] * 100.0
+    print("Free space:", free_space, "%")
+
+def rmdir(dir):
+    for i in os.listdir(dir):
+        os.remove('{}/{}'.format(dir,i))
+    os.rmdir(dir)
 
 
 # Disable all network functionality per default
 network.WLAN(network.STA_IF).active(False)
 network.WLAN(network.AP_IF).active(False)
 
-sws = SimpleWebserver()
 
 dht_sensor = dht.DHT22(machine.Pin(DHT_PIN))
 
@@ -159,16 +169,25 @@ except OSError:
 
 if sd:
     try:
-        os.mount(sd, '/sd')
-        print(os.listdir('/sd/'))
+        os.mount(sd, datadir)
+        print(os.listdir(datadir + '/'))
     except:
         print("Cannot mount sd card")
 
-# TODO: What should be done if no SD card is present?
+
+if not sd:
+    datadir = "/localdata"
+
+sws = SimpleWebserver(datadir)
+
+try:
+    os.mkdir(datadir)
+except:
+    pass
 
 # Get highest file id number from sd card
 new_fileid = 0
-for fn in os.listdir('/sd'):
+for fn in os.listdir(datadir):
     try:
         new_fileid = max(new_fileid, int(fn.split("_")[1]))
     except:
@@ -176,7 +195,7 @@ for fn in os.listdir('/sd'):
         pass
 
 new_fileid += 1
-filename = "/sd/" + DATA_FILENAME + str(new_fileid)
+filename = datadir + "/" + DATA_FILENAME + str(new_fileid)
 print("Storing new data to", new_fileid, filename)
 
 time.sleep(2) # Wait 2 secs to ensure everything is initiated properly (especially the DHT sensor)
@@ -194,15 +213,20 @@ while True:
     if state == STATE_FORMAT_SD and not sws.is_running():
         if sd:
             print("Start formatting sd card")
-            os.umount('/sd')
+            os.umount(datadir)
             os.VfsFat.mkfs(sd)
-            os.mount(sd, '/sd')
-            new_fileid = 1
-            filename = "/sd/" + DATA_FILENAME + str(new_fileid)
-
-            print("Done")
+            os.mount(sd, datadir)
         else:
-            print("SD access error")
+            print("Removing data dir:", datadir)
+            rmdir(datadir)
+            os.mkdir(datadir)
+
+        new_fileid = 1
+        filename = datadir + "/" + DATA_FILENAME + str(new_fileid)
+        print("Done")
+
+        
+            
 
         state = STATE_NORMAL
 
