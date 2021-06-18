@@ -20,12 +20,12 @@ For several application scenarios, a simple, easy to assemble, cheap and easy to
 
 ## Basic functionality
 
-In the basic version, this logger contains a temperature and humidity sensor, the controller board and an SD card for data storage. The sensor is read out every 10 minutes and the data is stored on the SD card.
+In the basic version, this logger contains a temperature and humidity sensor, the controller board and an SD card for data storage. The sensor is read out every 10 minutes and the data is stored.
 
 Additionally, the logger has a button for fundamental user interaction:
 * A short press (1 to 5 seconds) changes to the normal operation mode: Collect data every 10 minutes and try to reduce the energy requirements to a minimum-.
-* A long press (5 to 10 seconds) starts an access point and a web server. In this mode, the data can be read out from the SD card. After a short press to the button, the device will disable the web server and return to normal operation.
-* A very long press (15 to 20 seconds) will format the SD card and remove all measurements.
+* A long press (5 to 10 seconds) starts an access point and a web server. In this mode, the data can be read out from the SD card or internal storage. After a short press to the button, the device will disable the web server and return to normal operation.
+* A very long press (15 to 20 seconds) will remove the existing measurements from the internal storage or SD card
 
 ## The web server
 
