@@ -88,11 +88,12 @@ def read_sensors():
 
             res["time"] = time.time()
             return res
-        except:
+        except Exception as e:
+            print(e)
             retry += 1
-            time.delay(SENSOR_RETRY_DELAY)
-        print("Cannot read sensor")
-        return None
+            time.sleep(SENSOR_RETRY_DELAY)
+    print("Cannot read sensor")
+    return None
 
 # Read the stored data from the sd card and remove the files if requested
 def read_stored_data(path=datadir, remove = False):
