@@ -72,4 +72,4 @@ Nothing known... until now.
 
 Jens Dede, Sustainable Communication Networks, University of Bremen, jd@comnets.uni-bremen.de, 2021
 
-This code is licensed under the [GPLv3
+This code is licensed under the [GPLv3](LICENSE)
